@@ -27,12 +27,15 @@ paths:
                     type: string
                   userID:
                     type: string
+                  verificationCode:
+                    type: string
               examples:
                 Successful:
                   value:
                     status: success
                     companyID: e64f4d2a-11a2-11ea-a5ae-060095d9a561
                     userID: e66163ef-11a2-11ea-a5ae-060095d9a561
+                    verificationCode: e66163ef-11a2-11ea-a5ae-060095d9a561
         '400':
           description: Bad Request
           content:
@@ -133,6 +136,10 @@ paths:
                   type: string
               required:
                 - verificationCode
+            examples:
+              Example:
+                value:
+                  verificationCode: 5d374ec7-1511-4bdf-9e39-c77863b789db
         description: Pass the verification code through the body
       description: 'Done when user clicks verification email, this verifies that their email is valid and we are enabling their account.'
   /company/login:
