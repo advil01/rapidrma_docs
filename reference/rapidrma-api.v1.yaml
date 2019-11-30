@@ -2,6 +2,7 @@ openapi: 3.0.0
 info:
   title: RapidRMA API
   version: '1.0'
+  description: ''
 servers:
   - url: 'http://dev.api.rapidrma.com'
     description: Dev
@@ -133,6 +134,7 @@ paths:
               required:
                 - verificationCode
         description: Pass the verification code through the body
+      description: 'Done when user clicks verification email, this verifies that their email is valid and we are enabling their account.'
   /company/login:
     post:
       summary: Login
@@ -204,6 +206,7 @@ paths:
                 value:
                   email: me@advil0.com23
                   password: 'allenford123!'
+      description: 'User login, requires email + password.'
   '/company/{companyID}':
     parameters:
       - type: string
@@ -252,6 +255,7 @@ paths:
       operationId: 'get-company-{companyID}'
       security:
         - auth-key: []
+      description: 'Gets the company name, will be expanded later.'
 components:
   schemas: {}
   securitySchemes:
