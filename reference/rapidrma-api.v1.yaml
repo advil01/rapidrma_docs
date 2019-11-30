@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  title: RapidRMA API
+  version: '1.0'
+servers:
+  - url: 'http://dev.api.rapidrma.com'
+    description: Dev
+  - url: 'https://api.rapidrma.com'
+    description: Production
+paths:
+  /company/register:
+    post:
+      summary: Register Company
+      operationId: post-company-register
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  companyID:
+                    type: string
+                  userID:
+                    type: string
+              examples:
+                Successful:
+                  value:
+                    status: success
+                    companyID: e64f4d2a-11a2-11ea-a5ae-060095d9a561
+                    userID: e66163ef-11a2-11ea-a5ae-060095d9a561
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: Register a new company.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  required:
+                    - companyName
+                  properties:
+                    companyName:
+                      type: string
+                user:
+                  type: object
+                  required:
+                    - email
+                    - password
+                    - firstName
+                    - lastName
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+              required:
+                - company
+                - user
+            examples:
+              Successful:
+                value:
+                  company:
+                    companyName: testco
+                  user:
+                    password: 'allenford123!'
+                    email: me@advil0.com23
+                    firstName: Tyler
+                    lastName: Neal
+  '/company/{companyID}/verify':
+    parameters:
+      - type: string
+        name: companyID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Company UUID
+    post:
+      summary: Verify Company
+      operationId: 'post-company-{companyID}-verify'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Success:
+                  value:
+                    status: success
+        '401':
+          description: Bad Verification Code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    status: bad_verification_code
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                verificationCode:
+                  type: string
+              required:
+                - verificationCode
+        description: Pass the verification code through the body
+  /company/login:
+    post:
+      summary: Login
+      operationId: post-company-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  companyID:
+                    type: string
+                  auth-key:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    status: success
+                    companyID: e64f4d2a-11a2-11ea-a5ae-060095d9a561
+                    auth-key: 4974f175-1dff-48f2-85db-fe2e4e50f2f4
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Bad Inputs:
+                  value:
+                    status: bad_inputs
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Bad Email:
+                  value:
+                    status: email_invalid
+                Bad Password:
+                  value:
+                    status: password_incorrect
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+            examples:
+              Example:
+                value:
+                  email: me@advil0.com23
+                  password: 'allenford123!'
+  '/company/{companyID}':
+    parameters:
+      - type: string
+        name: companyID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Company UUID
+    get:
+      summary: Get Company Info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    name: testco
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Incorrect Company ID (getting info from diff company):
+                  value:
+                    status: not_allowed_company_id
+                Invalid Session:
+                  value:
+                    status: invalid_session
+                Missing Auth Key:
+                  value:
+                    status: no_auth_key
+      operationId: 'get-company-{companyID}'
+      security:
+        - auth-key: []
+components:
+  schemas: {}
+  securitySchemes:
+    auth-key:
+      name: auth-key
+      type: apiKey
+      in: header
