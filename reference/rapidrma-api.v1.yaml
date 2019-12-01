@@ -189,12 +189,12 @@ paths:
                   status:
                     type: string
               examples:
-                Bad Email:
+                Bad Login:
                   value:
-                    status: email_invalid
-                Bad Password:
+                    status: bad_login
+                Company Not Verified:
                   value:
-                    status: password_incorrect
+                    status: not_active
       requestBody:
         content:
           application/json:
