@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: RapidRMA API
   version: '1.0'
-  description: ''
+  description: 'API for the RapidRMA System'
   contact: {}
 servers:
   - url: 'http://dev.api.rapidrma.com'
