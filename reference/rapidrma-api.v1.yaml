@@ -294,6 +294,22 @@ paths:
                       name: Administrator
                     - id: 260f539f-157d-11ea-a5ae-060095d9a561
                       name: User
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Missing Auth Key:
+                  value:
+                    status: no_auth_key
+                Invalid Session:
+                  value:
+                    status: invalid_session
       operationId: 'get-company-{companyID}-role'
       description: Provides a list of all available roles a user can be associated to.
       security:
