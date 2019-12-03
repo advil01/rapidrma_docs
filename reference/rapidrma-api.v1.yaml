@@ -3,6 +3,7 @@ info:
   title: RapidRMA API
   version: '1.0'
   description: ''
+  contact: {}
 servers:
   - url: 'http://dev.api.rapidrma.com'
     description: Dev
