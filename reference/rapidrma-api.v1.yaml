@@ -263,6 +263,41 @@ paths:
       security:
         - auth-key: []
       description: 'Gets the company name, will be expanded later.'
+  '/company/{companyID}/role':
+    parameters:
+      - type: string
+        name: companyID
+        in: path
+        required: true
+    get:
+      summary: Get Available Roles
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+              examples:
+                Success:
+                  value:
+                    - id: 2608b438-157d-11ea-a5ae-060095d9a561
+                      name: Administrator
+                    - id: 260f539f-157d-11ea-a5ae-060095d9a561
+                      name: User
+      operationId: 'get-company-{companyID}-role'
+      description: Provides a list of all available roles a user can be associated to.
+      security:
+        - auth-key: []
 components:
   schemas: {}
   securitySchemes:
