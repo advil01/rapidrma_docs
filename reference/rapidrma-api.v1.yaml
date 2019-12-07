@@ -308,6 +308,63 @@ paths:
       description: Provides a list of all available roles a user can be associated to.  No auth current but will require auth key.
       security:
         - auth-key: []
+  /user:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Bad Inputs:
+                  value:
+                    status: bad_inputs
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Invalid Auth Key:
+                  value:
+                    status: invalid_auth_key
+                Missing Auth Key:
+                  value:
+                    status: missing_auth_key
+      description: Inviting a new user
+      security:
+        - auth-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address
+                role:
+                  type: string
+                  description: UUID of role
+            examples:
+              Example:
+                value:
+                  email: me@advil0.com
+                  role: 2608b438-157d-11ea-a5ae-060095d9a561
+        description: ''
 components:
   schemas: {}
   securitySchemes:
