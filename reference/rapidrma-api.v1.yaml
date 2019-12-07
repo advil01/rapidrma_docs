@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: RapidRMA API
   version: '1.0'
-  description: 'API for the RapidRMA System'
+  description: API for the RapidRMA System
   contact: {}
 servers:
   - url: 'http://dev.api.rapidrma.com'
@@ -279,15 +279,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  '':
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      name:
-                        type: string
+                type: array
+                items: {}
               examples:
                 Success:
                   value:
@@ -312,7 +305,7 @@ paths:
                   value:
                     status: invalid_session
       operationId: 'get-company-{companyID}-role'
-      description: Provides a list of all available roles a user can be associated to.
+      description: Provides a list of all available roles a user can be associated to.  No auth current but will require auth key.
       security:
         - auth-key: []
 components:
