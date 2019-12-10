@@ -446,6 +446,37 @@ paths:
                       type: integer
                     price:
                       type: number
+              examples:
+                Example:
+                  value:
+                    - id: 55a4c6f1-b42b-4cf2-a0ab-fafc31ea899f
+                      name: example
+                      weight: 29.3
+                      description: this is a description
+                      active: 1
+                      price: 29.99
+                    - id: 760137f6-6431-4a42-a143-cbbf99ae8420
+                      name: example
+                      weight: 29.3
+                      description: this is a description
+                      active: 1
+                      price: 29.99
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Invalid Auth Key:
+                  value:
+                    status: invalid_auth_key
+                Missing Auth Key:
+                  value:
+                    status: missing_auth_key
       operationId: get-product
       description: Retrieves all products related to the logged in company
       security:
