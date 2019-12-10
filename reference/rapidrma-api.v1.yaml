@@ -365,6 +365,55 @@ paths:
                   email: me@advil0.com
                   role: 2608b438-157d-11ea-a5ae-060095d9a561
         description: ''
+  '/user/{userID}/verify':
+    parameters:
+      - type: string
+        name: userID
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: 'post-user-{userID}-verify'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    status: success
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                Bad Verification Code:
+                  value:
+                    status: bad_verification_code
+      description: Validates user account using provided verification code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                verificationCode:
+                  type: string
+            examples:
+              Example:
+                value:
+                  verificationCode: 5d374ec7-1511-4bdf-9e39-c77863b789db
 components:
   schemas: {}
   securitySchemes:
