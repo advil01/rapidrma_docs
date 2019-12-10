@@ -280,7 +280,13 @@ paths:
             application/json:
               schema:
                 type: array
-                items: {}
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: string
               examples:
                 Success:
                   value:
@@ -414,6 +420,109 @@ paths:
               Example:
                 value:
                   verificationCode: 5d374ec7-1511-4bdf-9e39-c77863b789db
+  /product:
+    get:
+      summary: Retrieve All Products
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    weight:
+                      type: number
+                    description:
+                      type: string
+                    active:
+                      type: integer
+                    price:
+                      type: number
+      operationId: get-product
+      description: Retrieves all products related to the logged in company
+      security:
+        - auth-key: []
+    post:
+      summary: Create New Product
+      operationId: post-product
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  productID:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    status: success
+                    productID: ada03a48-b923-427f-b78e-74a04027110f
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Bad Inputs:
+                  value:
+                    status: bad_inputs
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Invalid Auth Key:
+                  value:
+                    status: invalid_auth_key
+                Missing Auth Key:
+                  value:
+                    status: missing_auth_key
+      description: Creates a new product under the logged in company.
+      security:
+        - auth-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                weight:
+                  type: number
+                description:
+                  type: string
+                price:
+                  type: number
+            examples:
+              Example:
+                value:
+                  name: test product
+                  weight: 25.7
+                  description: this is a description
+                  price: 29.99
 components:
   schemas: {}
   securitySchemes:
