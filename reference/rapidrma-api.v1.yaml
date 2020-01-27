@@ -264,12 +264,8 @@ paths:
       security:
         - auth-key: []
       description: 'Gets the company name, will be expanded later.'
-  '/company/{companyID}/role':
-    parameters:
-      - type: string
-        name: companyID
-        in: path
-        required: true
+  /role:
+    parameters: []
     get:
       summary: Get Available Roles
       tags: []
@@ -311,7 +307,7 @@ paths:
                   value:
                     status: invalid_session
       operationId: 'get-company-{companyID}-role'
-      description: Provides a list of all available roles a user can be associated to.  No auth current but will require auth key.
+      description: Provides a list of all available roles a user can be associated to.
       security:
         - auth-key: []
   /user:
@@ -554,6 +550,43 @@ paths:
                   weight: 25.7
                   description: this is a description
                   price: 29.99
+  '/product/{productID}':
+    parameters:
+      - type: string
+        name: productID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: UUID of Product
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                  name:
+                    type: string
+                  weight:
+                    type: number
+                  description:
+                    type: string
+                  active:
+                    type: string
+                  price:
+                    type: number
+      operationId: 'get-product-{productID}'
+      security:
+        - auth-key: []
+      parameters: []
+      description: Gets information regarding an individual product
 components:
   schemas: {}
   securitySchemes:
